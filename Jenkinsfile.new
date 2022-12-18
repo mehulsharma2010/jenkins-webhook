@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'mvn'
+    }
+
+    stages {
+        stage('Code Clone') {
+            steps {
+                echo 'Cloing Code'
+                git branch: 'master', credentialsId: 'mehul_git', url: 'https://github.com/opstree/spring3hibernate.git'
+            }
+        }
+
+        stage('Code Build') {
+            steps {
+                echo 'Building Code'
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Code Test') {
+            steps {
+                echo 'Testing Code'
+                sh 'mvn test'
+            }
+        }
+
+        stage('Store Artifact') {
+            steps {
+                echo 'Storing Artifact'
+                sh 'ls -al'
+            }
+        }
+    }
+
+post { 
+        success { 
+            echo 'Job is success!'
+        }
+        failure { 
+            echo 'Job failed'
+        }
+    }
+}
