@@ -5,7 +5,7 @@ pipeline {
         stage('Stage1') {
             steps {
                 echo 'Hello World'
-                echo 'Hello!!'
+                sh 'printenv'
                 sh 'pwd'
             }
         }
